@@ -74,7 +74,62 @@ raxmlHPC-PTHREADS -f a -# 100 -m PROTGAMMAAUTO -p 12345 -x 12345 -s merge.prot.p
 for e in cvir cgig cang cari_s cari_n
 do
 python codon.py $e.nucl.fa merge.prot.phy $e
-done 
+done
+echo 5"  "536 > input.txt
+cat cvir.blt_codon1.fa cgig.blt_codon1.fa cang.blt_codon1.fa cari_s.blt_codon1.fa cari_n.blt_codon1.fa >> input.txt
+echo 5"  "536 >> input.txt
+cat cvir.blt_codon2.fa cgig.blt_codon2.fa cang.blt_codon2.fa cari_s.blt_codon2.fa cari_n.blt_codon2.fa >> input.txt
+echo 5"  "536 >> input.txt
+cat cvir.blt_codon3.fa cgig.blt_codon3.fa cang.blt_codon3.fa cari_s.blt_codon3.fa cari_n.blt_codon3.fa >> input.txt
+sed -i 's/>//g' input.txt
+```
+codeml.ctl
+```
+        seed = -1           
+     seqfile = input.txt    
+    treefile = input.trees  
+    mcmcfile = mcmc.txt     
+     outfile = out.txt      
+
+       ndata = 3         
+     seqtype = 0         
+     usedata = 1         
+   cleandata = 0        
+       clock = 2         
+*    TipDate = 1 100    
+     RootAge = '<1.0'   
+
+       model = 4        
+       alpha = 0.5      
+     BDparas = 1 1 0.1  
+ kappa_gamma = 6 2     
+ alpha_gamma = 1 1      
+
+ rgene_gamma = 2 20 1   
+sigma2_gamma = 1 10 1    
+    finetune = 1: .1 .1 .1 .1 .1 .1    
+
+       print = 1      
+      burnin = 2000     
+    sampfreq = 10       
+     nsample = 20000    
+```
+input.trees
+```
+5  1
+(((cgig,cang),(cari_n,cari_s)),cvir)'>.63<.83';
+```
+```
+codeml codeml.ctl
+```
+
+```
+#NEXUS
+BEGIN TREES;
+
+	UTREE 1 = (((cgig: 0.036260, cang: 0.036260) [&95%HPD={0.0173206, 0.0597824}]: 0.254115, (cari_n: 0.009770, cari_s: 0.009770) [&95%HPD={0.0029215, 0.0179025}]: 0.280605) [&95%HPD={0.195611, 0.404283}]: 0.467974, cvir: 0.758349) [&95%HPD={0.64721, 0.838009}];
+
+END;
 ```
 
 **Reference**
