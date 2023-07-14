@@ -76,7 +76,7 @@ awk 'BEGIN{OFS="\t"}{print $1, $NF}' contigs_DpnII.txt > contigs.size
 cd ./i15k_r0
 ~/tools/3d-dna/run-asm-pipeline.sh -i 15000 -r 0 ../reference/contigs.fa ../aligned/merged_nodups.txt
 ```
-Genome assembly completeness was accessed by BUSCO v5.1.3 (Simão et al., 2015) using the “mollusca_odb10” BUSCO gene set collection (Waterhouse et al., 2018).
+Genome assembly completeness was accessed by BUSCO v5.1.3 (Simão et al., 2015) using the "mollusca_odb10" BUSCO gene set collection (Waterhouse et al., 2018)(https://busco-data.ezlab.org/v5/data/lineages/mollusca_odb10.2020-08-05.tar.gz).
 
 ```bash
 busco --offline -f -c 10 -i input.fa -l mollusca_odb10 -o output_busco -m genome
