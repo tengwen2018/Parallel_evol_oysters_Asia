@@ -57,7 +57,9 @@ python cds2prot.py ${i}_coi.dna.fa ${i}_coi.prot.fa ${i}_coi.nucl.fa
 done
 ```
 **Multiple alignment with MUSCLE v3.8.31 (Edgar & Soc, 2004).**
+```bash
 muscle -in merge.fa -out merge.afa
+```
 ****
 convertFasta2Phylip.sh merge.afa > merge.phy
 raxmlHPC-PTHREADS -f a -# 100 -m GTRGAMMA -p 12345 -x 12345 -s merge.phy -n merge.tree -T 30 
