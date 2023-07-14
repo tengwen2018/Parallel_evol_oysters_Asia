@@ -103,7 +103,9 @@ Dependencies and versions:
 	hmmsearch: 3.3
 	metaeuk: 4.a0f584d
 ```
-**Transposable elements de novo prediction and homology searching were performed by RepeatModeler v2.0.3 and RepeatMasker v4.1.1 (https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.1.tar.gz) pipeline (Smit AFA).**
+**Transposable elements de novo prediction and homology searching were performed by RepeatModeler v2.0.3 and RepeatMasker v4.1.1 pipeline (Smit AFA).**
+
+RepeatMasker v4.1.1 could be download frome https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.1.tar.gz.
 ```bash
 BuildDatabase -name ref ref.fasta
 RepeatModeler -database ref -pa 20 -LTRStruct
