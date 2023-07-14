@@ -122,7 +122,7 @@ input.trees
 ```
 codeml codeml.ctl
 ```
-
+Here is what the outpu looked like:
 ```
 #NEXUS
 BEGIN TREES;
