@@ -79,7 +79,7 @@ cd ./i15k_r0
 Genome assembly completeness was accessed by BUSCO v5.1.3 (Simão et al., 2015) using the "mollusca_odb10" BUSCO gene set collection (Waterhouse et al., 2018)(https://busco-data.ezlab.org/v5/data/lineages/mollusca_odb10.2020-08-05.tar.gz).
 
 ```bash
-busco --offline -f -c 10 -i input.fa -l mollusca_odb10 -o output_busco -m genome
+busco --offline -f -c 10 -i ref.fasta -l mollusca_odb10 -o output_busco -m genome
 ```
 Here is what the outpu looked like:
 ```
@@ -105,10 +105,11 @@ Dependencies and versions:
 ```
 Transposable elements de novo prediction and homology searching were performed by RepeatModeler v2.0.3 and RepeatMasker v4.1.1 (https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.1.tar.gz) pipeline (Smit AFA).
 ```bash
-BuildDatabase -name ref input.fna
+BuildDatabase -name ref ref.fasta
 RepeatModeler -database ref -pa 20 -LTRStruct
-RepeatMasker -e ncbi -lib ref-families.fa -gff -dir 00-RepeatMask_RepeatModeler -pa 15 -a input.fna 
+RepeatMasker -e ncbi -lib ref-families.fa -gff -dir 00-RepeatMask_RepeatModeler -pa 15 -a ref.fasta 
 ```
+Here is what the outpu looked like:
 ```
 ==================================================
 file name: input.fna                  
@@ -135,7 +136,6 @@ Retroelements        60645     36303191 bp    5.81 %
      Ty1/Copia         225       195687 bp    0.03 %
      Gypsy/DIRS1     15108     13152263 bp    2.11 %
        Retroviral        0            0 bp    0.00 %
-
 DNA transposons     365920    118872436 bp   19.04 %
    hobo-Activator     9890      3711019 bp    0.59 %
    Tc1-IS630-Pogo    37403     10920771 bp    1.75 %
@@ -145,33 +145,32 @@ DNA transposons     365920    118872436 bp   19.04 %
    Tourist/Harbinger 15668      3870853 bp    0.62 %
    Other (Mirage,      131        36952 bp    0.01 %
     P-element, Transib)
-
 Rolling-circles     129838     82442325 bp   13.20 %
-
 Unclassified:       234562     64598689 bp   10.35 %
-
 Total interspersed repeats:   219774316 bp   35.20 %
-
-
 Small RNA:             741       152705 bp    0.02 %
-
 Satellites:           1654       356882 bp    0.06 %
 Simple repeats:     134493      6637749 bp    1.06 %
 Low complexity:      16771       784708 bp    0.13 %
 ==================================================
-
 * most repeats fragmented by insertions or deletions
-  have been counted as one element
-                                                      
-
+  have been counted as one element                                                   
 RepeatMasker version 4.1.1 , default mode
-                                        
 run with rmblastn version 2.10.0+
 The query was compared to classified sequences in "merged.fa"
 ```
 Alignment assembly was first completed using transcriptome data by PASA pipeline v2.5.1 (Haas et al., 2003). The genome was also annotated by MAKER v3.01.03 (Cantarel et al., 2008).
 ```bash
-
+# Data trimming of RNA HiFi reads
+lima pt1mix10.ccs.bam primers.fasta pt1mix10.flnc.bam --isoseq --peek-guess
+# Convert bam file to fastq file
+bam2fastq -o pt1mix10.flnc pt1mix10.flnc.bam
+# Mapping reads to our genome reference
+minimap2 -ax splice -t 40 ref.fasta pt1mix10.flnc.fastq.gz | samtools view -h -F 4 | samtools sort -@ 10  > pt1mix10.flnc.mapped.bam
+# Transcriptome assembly
+Trinity --genome_guided_bam pt1mix10.flnc.mapped.bam --max_memory 1000G --genome_guided_max_intron 10000 --CPU 50
+# Annotation with PASA
+~/tools/PASApipeline/Launch_PASA_pipeline.pl -c ~/tools/PASApipeline/pasa_conf/pt1mix10_withdatatrimming.config -C -R -g ref.fasta -t Trinity-GG.rename.fasta.clean -T -u Trinity-GG.rename.fasta --ALIGNERS blat,gmap --CPU 50
 ```
 
 **Reference**
