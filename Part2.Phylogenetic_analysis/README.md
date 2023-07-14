@@ -58,21 +58,35 @@ python cds2prot.py ${i}_coi.dna.fa ${i}_coi.prot.fa ${i}_coi.nucl.fa
 cd ../
 done
 ```
-**Multiple alignment with MUSCLE v3.8.31 (Edgar & Soc, 2004).**
+**Multiple alignment with MUSCLE v3.8.31 (Edgar & Soc, 2004) and Kimura 2-parameter (K2P) distances calculation with the DNADIST program (Felsenstein, 1988).**
 ```bash
 muscle -in merge.fa -out merge.afa
+convertFasta2Phylip.sh merge.afa > infile
+dnadist
 ```
-****
-convertFasta2Phylip.sh merge.afa > merge.phy
-raxmlHPC-PTHREADS -f a -# 100 -m GTRGAMMA -p 12345 -x 12345 -s merge.phy -n merge.tree -T 30 
-
+**Estimate divergence time with PAML (Yang, 1997)**
+```bash
+cat cvir.prot.fa cgig.prot.fa cang.prot.fa cari_s.prot.fa cari_n.prot.fa > merge.prot.fa
+muscle -in merge.prot.fa -out merge.prot.afa
+convertFasta2Phylip.sh merge.prot.afa > merge.prot.phy
+raxmlHPC-PTHREADS -f a -# 100 -m PROTGAMMAAUTO -p 12345 -x 12345 -s merge.prot.phy -n merge.prot.tree -T 30 
+# protein to codon 1, 2, 3
+for e in cvir cgig cang cari_s cari_n
+do
+python codon.py $e.nucl.fa merge.prot.phy $e
+done 
+```
 
 **Reference**
 
 Edgar, R. C. (2004). MUSCLE: a multiple sequence alignment method with reduced time and space complexity. BMC Bioinformatics, 5, 1-19. https://doi.org/10.1186/1471-2105-5-113
+
+Felsenstein, J. (1988). Phylogenies from molecular sequences: inference and reliability. Annual Review of Genetics, 22, 521-565. https://doi.org/10.1146/annurev.ge.22.120188.002513
 
 Li, L., Li, A., Song, K., Meng, J., Guo, X., Li, S., ... Zhang, G. (2018). Divergence and plasticity shape adaptive potential of the Pacific oyster. Nature Ecology & Evolution, 2, 1751-1760. https://doi.org/10.1038/s41559-018-0668-2
 
 Prjibelski, A., Antipov, D., Meleshko, D., Lapidus, A., & Korobeynikov, A. (2020). Using SPAdes de novo assembler. Current protocols in bioinformatics, 70, e102. https://doi.org/10.1002/cpbi.102
 
 Wu, B., Chen, X., Yu, M. J., Ren, J. F., Hu, J., Shao, C. W., ... Liu, Z. H. (2022). Chromosome-level genome and population genomic analysis provide insights into the evolution and environmental adaptation of Jinjiang oyster Crassostrea ariakensis. Molecular Ecology Resources, 22, 1529-1544. https://doi.org/10.1111/1755-0998.13556
+
+Yang, Z. (1997). PAML: a program package for phylogenetic analysis by maximum likelihood. Computer applications in the biosciences, 13, 555-556. https://doi.org/10.1093/bioinformatics/13.5.555
