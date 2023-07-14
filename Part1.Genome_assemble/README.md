@@ -85,7 +85,7 @@ Here is what the outpu looked like:
 ```
 # BUSCO version is: 5.1.2 
 # The lineage dataset is: mollusca_odb10 (Creation date: 2020-08-05, number of genomes: 7, number of BUSCOs: 5295)
-# Summarized benchmarking in BUSCO notation for file /public1/node3_genomic/genomecomp20201031/denovoassembly/hifiasm/haplomerge2/juicer/i15k_r0/anno/busco/nucleotide_seq/crassostrea_angulata/crassostrea_angulata.fna
+# Summarized benchmarking in BUSCO notation for file /yourpath/crassostrea_angulata.fna
 # BUSCO was run in mode: genome
 # Gene predictor used: metaeuk
 
