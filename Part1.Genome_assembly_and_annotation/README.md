@@ -103,7 +103,7 @@ Dependencies and versions:
 	hmmsearch: 3.3
 	metaeuk: 4.a0f584d
 ```
-Transposable elements de novo prediction and homology searching were performed by RepeatModeler v2.0.3 and RepeatMasker v4.1.1 pipeline (Smit AFA).
+Transposable elements de novo prediction and homology searching were performed by RepeatModeler v2.0.3 and RepeatMasker v4.1.1 (https://www.repeatmasker.org/RepeatMasker/RepeatMasker-4.1.1.tar.gz) pipeline (Smit AFA).
 ```bash
 BuildDatabase -name ref input.fna
 RepeatModeler -database ref -pa 20 -LTRStruct
@@ -169,12 +169,20 @@ RepeatMasker version 4.1.1 , default mode
 run with rmblastn version 2.10.0+
 The query was compared to classified sequences in "merged.fa"
 ```
+Alignment assembly was first completed using transcriptome data by PASA pipeline v2.5.1 (Haas et al., 2003). The genome was also annotated by MAKER v3.01.03 (Cantarel et al., 2008).
+```bash
+
+```
 
 **Reference**
+
+Cantarel, B. L., Korf, I., Robb, S. M., Parra, G., Ross, E., Moore, B., ... Yandell, M. (2008). MAKER: an easy-to-use annotation pipeline designed for emerging model organism genomes. Genome research, 18, 188-196. https://doi.org/10.1101/gr.6743907
 
 Cheng, H., Concepcion, G. T., Feng, X., Zhang, H., & Li, H. (2021). Haplotype-resolved de novo assembly using phased assembly graphs with hifiasm. Nature Methods, 18, 170-175. https://doi.org/10.1038/s41592-020-01056-5
 
 Durand, N. C., Robinson, J. T., Shamim, M. S., Machol, I., Mesirov, J. P., Lander, E. S., & Aiden, E. L. (2016). Juicebox provides a visualization system for Hi-C contact maps with unlimited zoom. Cell systems, 3, 99-101. https://doi.org/10.1016/j.cels.2015.07.012
+
+Haas, B. J., Delcher, A. L., Mount, S. M., Wortman, J. R., Smith Jr, R. K., Hannick, L. I., ... Town, C. D. (2003). Improving the Arabidopsis genome annotation using maximal transcript alignment assemblies. Nucleic Acids Research, 31, 5654-5666. https://doi.org/10.1093/nar/gkg770
 
 Huang, S., Kang, M., & Xu, A. (2017). HaploMerger2: rebuilding both haploid sub-assemblies from high-heterozygosity diploid genome assembly. Bioinformatics, 33, 2577-2579. https://doi.org/10.1093/bioinformatics/btx220
 
