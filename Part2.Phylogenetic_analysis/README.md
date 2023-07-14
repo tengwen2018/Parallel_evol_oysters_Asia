@@ -20,7 +20,7 @@ rm -f fixmate.bam && \
 samtools markdup -@ 8 -r positionsort.bam sample1.dup.bam && \
 rm -f positionsort.bam && \
 samtools index -@ 8 sample1.dup.bam
-
+# remove dup and low quality mapped reads
 samtools view -@ 8 -h -F 0x100 -F 0x400 sample1.dup.bam | mawk '$6 !~/[8-9].[SH]/ && $6 !~ /[1-9][0-9].[SH]/'| samtools view -@ 8 -q 30 -bS > sample1.bam && \
 samtools index sample1.bam && \
 rm -f sample1.dup.bam
