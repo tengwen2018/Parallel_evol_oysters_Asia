@@ -25,6 +25,14 @@ samtools view -@ 8 -h -F 0x100 -F 0x400 sample1.dup.bam | mawk '$6 !~/[8-9].[SH]
 samtools index sample1.bam && \
 rm -f sample1.dup.bam
 ````
+**Assemble the unmapped reads**
+```bash
+samtools fastq -@ 10 -f 4 -1 unmapped.R1.fastq -2 unmapped.R2.fastq -s unmapped.RS.fastqsample1.dup.bam
+spades.py -1 unmapped.R1.fastq -2 unmapped.R2.fastq -s unmapped.RS.fastq --careful --cov-cutoff auto -o spades_assembly -t 30
+```
 
 **Reference**
+
 Li, L., Li, A., Song, K., Meng, J., Guo, X., Li, S., ... Zhang, G. (2018). Divergence and plasticity shape adaptive potential of the Pacific oyster. Nature Ecology & Evolution, 2, 1751-1760. https://doi.org/10.1038/s41559-018-0668-2
+
+Wu, B., Chen, X., Yu, M. J., Ren, J. F., Hu, J., Shao, C. W., ... Liu, Z. H. (2022). Chromosome-level genome and population genomic analysis provide insights into the evolution and environmental adaptation of Jinjiang oyster Crassostrea ariakensis. Molecular Ecology Resources, 22, 1529-1544. https://doi.org/10.1111/1755-0998.13556
