@@ -109,6 +109,66 @@ BuildDatabase -name ref input.fna
 RepeatModeler -database ref -pa 20 -LTRStruct
 RepeatMasker -e ncbi -lib ref-families.fa -gff -dir 00-RepeatMask_RepeatModeler -pa 15 -a input.fna 
 ```
+```
+==================================================
+file name: input.fna                  
+sequences:           412
+total length:  624377014 bp  (624245514 bp excl N/X-runs)
+GC level:         33.58 %
+bases masked:  310143980 bp ( 49.67 %)
+==================================================
+               number of      length   percentage
+               elements*    occupied  of sequence
+--------------------------------------------------
+Retroelements        60645     36303191 bp    5.81 %
+   SINEs:             2420       361749 bp    0.06 %
+   Penelope           9215      3440732 bp    0.55 %
+   LINEs:            36167     17074402 bp    2.73 %
+    CRE/SLACS            0            0 bp    0.00 %
+     L2/CR1/Rex        927       359090 bp    0.06 %
+     R1/LOA/Jockey     189        53400 bp    0.01 %
+     R2/R4/NeSL        180       144925 bp    0.02 %
+     RTE/Bov-B       12984      5346668 bp    0.86 %
+     L1/CIN4            72        11223 bp    0.00 %
+   LTR elements:     22058     18867040 bp    3.02 %
+     BEL/Pao          1959      2281547 bp    0.37 %
+     Ty1/Copia         225       195687 bp    0.03 %
+     Gypsy/DIRS1     15108     13152263 bp    2.11 %
+       Retroviral        0            0 bp    0.00 %
+
+DNA transposons     365920    118872436 bp   19.04 %
+   hobo-Activator     9890      3711019 bp    0.59 %
+   Tc1-IS630-Pogo    37403     10920771 bp    1.75 %
+   En-Spm                0            0 bp    0.00 %
+   MuDR-IS905            0            0 bp    0.00 %
+   PiggyBac           5280      1318534 bp    0.21 %
+   Tourist/Harbinger 15668      3870853 bp    0.62 %
+   Other (Mirage,      131        36952 bp    0.01 %
+    P-element, Transib)
+
+Rolling-circles     129838     82442325 bp   13.20 %
+
+Unclassified:       234562     64598689 bp   10.35 %
+
+Total interspersed repeats:   219774316 bp   35.20 %
+
+
+Small RNA:             741       152705 bp    0.02 %
+
+Satellites:           1654       356882 bp    0.06 %
+Simple repeats:     134493      6637749 bp    1.06 %
+Low complexity:      16771       784708 bp    0.13 %
+==================================================
+
+* most repeats fragmented by insertions or deletions
+  have been counted as one element
+                                                      
+
+RepeatMasker version 4.1.1 , default mode
+                                        
+run with rmblastn version 2.10.0+
+The query was compared to classified sequences in "merged.fa"
+```
 
 **Reference**
 
@@ -121,6 +181,8 @@ Huang, S., Kang, M., & Xu, A. (2017). HaploMerger2: rebuilding both haploid sub-
 Marçais, G., & Kingsford, C. (2011). A fast, lock-free approach for efficient parallel counting of occurrences of k-mers. Bioinformatics, 27, 764-770. https://doi.org/10.1093/bioinformatics/btr011
 
 Simão, F. A., Waterhouse, R. M., Ioannidis, P., Kriventseva, E. V., & Zdobnov, E. M. (2015). BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs. Bioinformatics, 31, 3210-3212. https://doi.org/10.1093/bioinformatics/btv351
+
+Smit AFA, H. R. RepeatMasker. http://www.repeatmasker.org/RepeatModeler/. Accessed 23 June 2022
 
 Vurture, G. W., Sedlazeck, F. J., Nattestad, M., Underwood, C. J., Fang, H., Gurtowski, J., & Schatz, M. C. (2017). GenomeScope: fast reference-free genome profiling from short reads. Bioinformatics, 33, 2202-2204. https://doi.org/10.1093/bioinformatics/btx153
 
