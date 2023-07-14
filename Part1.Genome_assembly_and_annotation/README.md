@@ -103,6 +103,12 @@ Dependencies and versions:
 	hmmsearch: 3.3
 	metaeuk: 4.a0f584d
 ```
+Transposable elements de novo prediction and homology searching were performed by RepeatModeler v2.0.3 and RepeatMasker v4.1.1 pipeline (Smit AFA).
+```bash
+BuildDatabase -name ref input.fna
+RepeatModeler -database ref -pa 20 -LTRStruct
+RepeatMasker -e ncbi -lib ref-families.fa -gff -dir 00-RepeatMask_RepeatModeler -pa 15 -a input.fna 
+```
 
 **Reference**
 
