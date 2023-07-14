@@ -46,6 +46,7 @@ done
 ```bash
 for i in `cat sample.list`
 do
+cd $i
 makeblastdb -in scaffolds.fasta -dbtype nucl
 blastn -query FJ841964.1.fa -db scaffolds.fasta -out $i.blt -outfmt 6
 head -n 1 $i.blt > $i.head1.blt
@@ -54,6 +55,7 @@ start=`sed -n -e 1p $i.head1.blt | awk '{print $9}'`
 end=`sed -n -e 1p $i.head1.blt | awk '{print $10}'`
 samtools faidx scaffolds.fasta && samtools faidx scaffolds.fasta ${coi}:${start}-${end} > ${i}_coi.dna.fa
 python cds2prot.py ${i}_coi.dna.fa ${i}_coi.prot.fa ${i}_coi.nucl.fa
+cd ../
 done
 ```
 **Multiple alignment with MUSCLE v3.8.31 (Edgar & Soc, 2004).**
