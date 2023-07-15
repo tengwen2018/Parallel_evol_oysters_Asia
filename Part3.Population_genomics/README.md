@@ -15,7 +15,17 @@ vcftools --gzvcf $VCF_IN \
 ```
 
 **Principal components analysis (PCA) with PLINK v1.9(Purcell et al., 2007).**
-
+```bash
+# perform linkage pruning - i.e. identify prune sites
+plink --vcf oyster.filtered.vcf.gz --double-id --allow-extra-chr \
+--set-missing-var-ids @:# \
+--indep-pairwise 50 10 0.1 --out oyster
+# prune and create pca
+plink --vcf oyster.filtered.vcf.gz --double-id --allow-extra-chr --set-missing-var-ids @:# \
+--extract oyster.prune.in \
+--threads 10 \
+--make-bed --pca --out oyster
+```
 
 
 **Reference**
