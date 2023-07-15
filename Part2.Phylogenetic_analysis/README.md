@@ -119,6 +119,7 @@ input.trees
 5  1
 (((cgig,cang),(cari_n,cari_s)),cvir)'>.63<.83';
 ```
+Run codeml
 ```
 codeml codeml.ctl
 ```
