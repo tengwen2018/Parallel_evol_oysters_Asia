@@ -83,7 +83,7 @@ echo 5"  "536 >> input.txt
 cat cvir.blt_codon3.fa cgig.blt_codon3.fa cang.blt_codon3.fa cari_s.blt_codon3.fa cari_n.blt_codon3.fa >> input.txt
 sed -i 's/>//g' input.txt
 ```
-codeml.ctl
+Here is the control file, codeml.ctl.
 ```
         seed = -1           
      seqfile = input.txt    
