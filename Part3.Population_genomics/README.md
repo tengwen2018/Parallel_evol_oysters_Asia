@@ -40,6 +40,27 @@ admixture --cv $FILE.bed $i > log${i}.out
 sh admixture_cangcgig.$i.sh
 done
 ```
+**Estimation of per-site *F*<sub>ST</sub> and sliding-window *F*<sub>ST</sub>.**
+```bash
+# filter individuals with missingness above 20%
+vcftools --gzvcf oyster.filtered.vcf.gz --missing-indv
+sed '1d' out.imiss | awk '{if($5>0.2)print $1}' > lowDP.indv
+vcftools --gzvcf oyster.filtered.vcf.gz --remove lowDP.indv --recode --stdout | gzip -c > filterlowDP.vcf.gz
+# Pi, Fst, dxy, fd
+parseVCF.py -i filterlowDP.vcf.gz | bgzip > filterlowDP.geno.gz
+# per site fst
+VCF=filterlowDP.vcf.gz
+time vcftools --gzvcf ${VCF} \
+--weir-fst-pop south \
+--weir-fst-pop north \
+--out ./south.vs.north
+# sliding windows
+popgenWindows.py -g filterlowDP.geno.gz -o filterlowDP.2k.Fst.Dxy.pi.csv.gz \
+   -f phased -w 2000 -m 10 -s 2000 \
+   -p south -p north \
+   --popsFile pop.info
+```
+
 
 **Reference**
 
