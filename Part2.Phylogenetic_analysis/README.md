@@ -131,6 +131,9 @@ BEGIN TREES;
 
 END;
 ```
+**Estimate divergence time with SNPs**
+
+
 
 **Reference**
 
