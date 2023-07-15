@@ -54,7 +54,7 @@ time vcftools --gzvcf filterlowDP.vcf.gz \
 # sliding windows of 2kb
 parseVCF.py -i filterlowDP.vcf.gz | bgzip > filterlowDP.geno.gz
 popgenWindows.py -g filterlowDP.geno.gz -o filterlowDP.2k.Fst.Dxy.pi.csv.gz \
-   -f phased -w 2000 -m 10 -s 2000 \
+   -f phased -w 2000 -m 10000 -s 2000 \
    -p south -p north \
    --popsFile pop.info
 ```
