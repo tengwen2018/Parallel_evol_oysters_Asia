@@ -58,6 +58,50 @@ popgenWindows.py -g filterlowDP.geno.gz -o filterlowDP.2k.Fst.Dxy.pi.csv.gz \
    -p south -p north \
    --popsFile pop.info
 ```
+**GO Ontology with clusterProfiler R package (Yu et al., 2012)**
+```R
+library(clusterProfiler)
+
+go_anno <- read.delim('cang2go.txt', header=FALSE, stringsAsFactors =FALSE)
+names(go_anno) <- c('gene_id','ID')
+
+go_class <- read.delim('go-basic.txt', header=FALSE, stringsAsFactors =FALSE)
+names(go_class) <- c('ID','Description','Ontology')
+
+go_anno <-merge(go_anno, go_class, by = 'ID', all.x = TRUE)
+
+gene_list <- read.delim('gene.list',stringsAsFactors = FALSE)
+names(gene_list) <- c('gene_id')
+gene_select <- gene_list$gene_id
+
+go_rich <- enricher(gene = gene_select,
+                 TERM2GENE = go_anno[c('ID','gene_id')],
+                 TERM2NAME = go_anno[c('ID','Description')],
+                 pvalueCutoff = 0.05,
+                 pAdjustMethod = 'BH',
+                 qvalueCutoff = 0.2,
+                 maxGSSize = 200)
+
+barplot(go_rich,showCategory = 20,drop=T)
+dev.off()
+#BiocManager::install('topGO')
+#BiocManager::install('Rgraphviz')
+
+library(topGO)
+write.table(go_rich, 'go_tmp.txt', sep='\t', row.names = FALSE, quote = FALSE)
+tmp <- read.delim('go_tmp.txt')
+tmp <- merge(tmp, go_class[c('ID', 'Ontology')], by = 'ID')
+tmp <- tmp[c(10,1:9)]
+tmp <- tmp[order(tmp$pvalue),]
+write.table(tmp, 'go_rich.significant.txt', sep = '\t', row.names = FALSE, quote = FALSE)
+tmp <- tmp[tmp$Ontology=="biological_process",]
+tmp <- head(tmp,20)
+go_rich_BP <- go_rich
+go_rich_BP@result <- go_rich_BP@result[as.vector(subset(tmp,  Ontology == 'biological_process')$ID),]
+go_rich_BP@ontology <- 'BP'
+plotGOgraph(go_rich_BP)
+dev.off()
+```
 
 
 **Reference**
@@ -67,3 +111,5 @@ Alexander, D. H., Novembre, J., & Lange, K. (2009). Fast model-based estimation 
 Danecek, P., Auton, A., Abecasis, G., Albers, C. A., Banks, E., DePristo, M. A., ... Sherry, S. T. (2011). The variant call format and VCFtools. Bioinformatics, 27, 2156-2158. https://doi.org/10.1093/bioinformatics/btr330
 
 Purcell, S., Neale, B., Todd-Brown, K., Thomas, L., Ferreira, M. A. R., Bender, D., ... Sham, P.C. (2007). PLINK: A tool set for whole-genome association and population-based linkage analyses. American Journal of Human Genetics, 81, 559-575. https://doi.org/10.1086/519795
+
+Yu, G., Wang, L. G., Han, Y., & He, Q. Y. (2012). clusterProfiler: an R package for comparing biological themes among gene clusters. OMICS, 16, 284-287. https://doi.org/10.1089/omi.2011.0118
