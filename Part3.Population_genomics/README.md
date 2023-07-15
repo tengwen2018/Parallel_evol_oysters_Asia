@@ -58,7 +58,7 @@ popgenWindows.py -g filterlowDP.geno.gz -o filterlowDP.2k.Fst.Dxy.pi.csv.gz \
    -p south -p north \
    --popsFile pop.info
 ```
-**GO Ontology with clusterProfiler R package (Yu et al., 2012)**
+**GO Ontology with clusterProfiler R package (Yu et al., 2012).**
 ```R
 library(clusterProfiler)
 
