@@ -81,7 +81,7 @@ cd ./i15k_r0
 ```bash
 busco --offline -f -c 10 -i ref.fasta -l mollusca_odb10 -o output_busco -m genome
 ```
-Here is what the outpu looked like:
+Here is what the output looked like:
 ```
 # BUSCO version is: 5.1.2 
 # The lineage dataset is: mollusca_odb10 (Creation date: 2020-08-05, number of genomes: 7, number of BUSCOs: 5295)
@@ -111,7 +111,7 @@ BuildDatabase -name ref ref.fasta
 RepeatModeler -database ref -pa 20 -LTRStruct
 RepeatMasker -e ncbi -lib ref-families.fa -gff -dir 00-RepeatMask_RepeatModeler -pa 15 -a ref.fasta
 ```
-Here is what the outpu looked like:
+Here is what the output looked like:
 ```
 ==================================================
 file name: input.fna                  
