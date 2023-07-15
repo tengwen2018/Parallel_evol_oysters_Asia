@@ -46,15 +46,13 @@ done
 vcftools --gzvcf oyster.filtered.vcf.gz --missing-indv
 sed '1d' out.imiss | awk '{if($5>0.2)print $1}' > lowDP.indv
 vcftools --gzvcf oyster.filtered.vcf.gz --remove lowDP.indv --recode --stdout | gzip -c > filterlowDP.vcf.gz
-# Pi, Fst, dxy, fd
-parseVCF.py -i filterlowDP.vcf.gz | bgzip > filterlowDP.geno.gz
 # per site fst
-VCF=filterlowDP.vcf.gz
-time vcftools --gzvcf ${VCF} \
+time vcftools --gzvcf filterlowDP.vcf.gz \
 --weir-fst-pop south \
 --weir-fst-pop north \
 --out ./south.vs.north
 # sliding windows
+parseVCF.py -i filterlowDP.vcf.gz | bgzip > filterlowDP.geno.gz
 popgenWindows.py -g filterlowDP.geno.gz -o filterlowDP.2k.Fst.Dxy.pi.csv.gz \
    -f phased -w 2000 -m 10 -s 2000 \
    -p south -p north \
