@@ -58,6 +58,38 @@ popgenWindows.py -g filterlowDP.geno.gz -o filterlowDP.2k.Fst.Dxy.pi.csv.gz \
    -p south -p north \
    --popsFile pop.info
 ```
+Calculate the number of times the maximum *F*<sub>ST</sub> exceeds the mean *F*<sub>ST</sub> divided by the standard deviation
+```R
+rm(list = ls()) 
+library(getopt) 
+spec <- matrix( c(
+"iParameter", "i", 1, "character"
+), byrow=TRUE, ncol=4) 
+opt <- getopt(spec=spec)
+
+df <- read.table(opt$iParameter, header=T)
+df <- na.omit(df)
+print((max(df$WEIR_AND_COCKERHAM_FST)-mean(df$WEIR_AND_COCKERHAM_FST))/sd(df$WEIR_AND_COCKERHAM_FST))
+```
+Count numbers of sites having *F*<sub>ST</sub> over 3 SD above the mean.
+```R
+rm(list = ls())
+library(getopt) 
+library(plyr)
+spec <- matrix( c(
+"iParameter", "i", 1, "character"
+), byrow=TRUE, ncol=4) 
+opt <- getopt(spec=spec)
+
+df <- read.table(opt$iParameter, header=T)
+df <- na.omit(df)
+mea <- mean(df$WEIR_AND_COCKERHAM_FST)
+std <- sd(df$WEIR_AND_COCKERHAM_FST)
+res <- mutate(df, value=(WEIR_AND_COCKERHAM_FST-mea)/std)
+res <- res[res$value>=3,]
+print(length(res$value))
+```
+
 **GO Ontology with clusterProfiler R package (Yu et al., 2012).**
 ```R
 library(clusterProfiler)
