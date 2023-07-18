@@ -31,7 +31,6 @@ plink --vcf oyster.filtered.vcf.gz --double-id --allow-extra-chr --set-missing-v
 FILE=oyster.filtered
 # Generate the input file in plink format
 plink --vcf $FILE.vcf.gz --make-bed --out $FILE --allow-extra-chr
-# ADMIXTURE does not accept chromosome names that are not human chromosomes. We will thus just exchange the first column by 0
 awk '{$1=0;print $0}' $FILE.bim > $FILE.bim.tmp
 mv $FILE.bim.tmp $FILE.bim
 for i in {1..5}
