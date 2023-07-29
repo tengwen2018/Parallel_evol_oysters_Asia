@@ -466,7 +466,7 @@ awk '{ if ($2 ~ /protein2genome/) print $0 }' rnd2.all.maker.noseq.gff > rnd2.al
 # repeat alignments
 awk '{ if ($2 ~ "repeat") print $0 }' rnd2.all.maker.noseq.gff > rnd2.all.maker.repeats.gff
 ```
-Repat step2 and step3 three times.
+Repat step2 and step3 four times.
 
 
 **Reference**
