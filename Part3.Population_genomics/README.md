@@ -57,6 +57,18 @@ popgenWindows.py -g filterlowDP.geno.gz -o filterlowDP.2k.Fst.Dxy.pi.csv.gz \
    -p south -p north \
    --popsFile pop.info
 ```
+Estimate the rate of synonymous mutation per synonymous site (*d*<sub>s</sub>)
+```
+for i in `seq 1 10`
+do
+mkdir chr$i && cd chr$i
+bcftools view -S chr$i -r chr$i -Oz -o $1.$2.vcf.gz ../input.vcf
+grep -v "0/0" chr$i.vcf | grep -v "\./\." > filter.vcf
+~/tools/SNPGenie/snpgenie.pl --vcfformat=4 --snpreport=filter.vcf\
+ --fastafile=~/ref/chr1.fa\
+ --gtffile=~/ref/chr2.gtf
+done
+```
 Calculate the number of times the maximum *F*<sub>ST</sub> exceeds the mean *F*<sub>ST</sub> divided by the standard deviation
 ```R
 rm(list = ls()) 
