@@ -133,9 +133,10 @@ BEGIN TREES;
 END;
 ```
 **Estimate divergence time with SNPs**
+```
 ruby snapp_prep.rb -v filtered.sub.vcf -t samples.txt -c constraints.txt -m 1000 -l 100000
 ruby add_theta_to_log.rb -l snapp.log -t snapp.trees -g 3 -o snapp_w_popsize.log
-
+```
 
 **Reference**
 
